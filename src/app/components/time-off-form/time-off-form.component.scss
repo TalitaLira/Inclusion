@@ -1,5 +1,6 @@
 @import '../../../assets/style-patterns/form.scss';
 @import '../../../assets/style-patterns/btn.scss';
+@import '../../../assets/style-patterns/fonts.scss';
 
 #wrapEditionForm{
     max-width: 340px;
@@ -12,6 +13,38 @@
     }
     .btn-filled{
         margin-left: 4px;
+    }
+}
+
+.balanceLink{
+    position: relative;
+    display: block;
+    margin: 0;
+    color: $sky-blue;
+    font-size: 14px;
+    @include semi-bold;
+    margin: 4px 0 16px 0;
+    cursor: pointer;
+}
+
+.invalid{
+    border: 2px solid $red !important;
+}
+
+.form-errors{
+    position: relative;
+    margin: 10px 0;
+    width: 100%;
+    background-color: rgba($red, 0.1);
+    border: 1px solid rgba($red, 0.2);
+    border-radius: 3px;
+    padding: 10px;
+    overflow: hidden;
+    .invalid-feedback{
+        font-size: 13px;
+        @include semi-bold;
+        color: $dark-red;
+        margin: 5px 0;
     }
 }
 

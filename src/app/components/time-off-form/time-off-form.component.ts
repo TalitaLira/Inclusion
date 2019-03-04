@@ -3,6 +3,7 @@ import { TimeOffRequest } from 'src/app/interfaces/time-off-request';
 import { TimeOffType } from 'src/app/interfaces/time-off-type';
 import { People } from 'src/app/interfaces/people';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { HoursBalance } from 'src/app/interfaces/hours-balance';
 
 @Component({
   selector: 'app-time-off-form',
@@ -19,6 +20,11 @@ export class TimeOffFormComponent implements OnInit {
   leaveTypes: TimeOffType[] = [];
   people: People[] = [];
   editionForm: FormGroup;
+  balances: HoursBalance;
+  isBalanceOpened = false;
+  balanceAction = 'View';
+  haveErrors: boolean;
+  dateMask: RegExp = /([0-9][0-9][0-9][0-9]-[A-Z])\w+(-[0-9][0-9])/;
 
   constructor(private fb: FormBuilder) {
 
@@ -28,6 +34,8 @@ export class TimeOffFormComponent implements OnInit {
     this.getLeaveTypes();
     this.getPeople();
     this.createForm();
+    this.getBalances();
+
   }
 
   /**
@@ -37,26 +45,48 @@ export class TimeOffFormComponent implements OnInit {
   private createForm() {
     this.editionForm = this.fb.group({
       leaveType: new FormControl(this.requestToEdit && this.requestToEdit.leaveType ?
-        this.requestToEdit.leaveType : '', Validators.required),
-      duration: new FormControl(this.requestToEdit && this.requestToEdit.duration ? this.requestToEdit.duration : null),
-      startDate: new FormControl(this.requestToEdit && this.requestToEdit.startDate ? this.requestToEdit.startDate : ''),
-      endDate: new FormControl(this.requestToEdit && this.requestToEdit.endDate ? this.requestToEdit.endDate : ''),
+        this.requestToEdit.leaveType : null, Validators.required),
+
+      duration: new FormControl(this.requestToEdit && this.requestToEdit.duration ?
+        this.requestToEdit.duration : null, Validators.required),
+
+      startDate: new FormControl(this.requestToEdit && this.requestToEdit.startDate ?
+        this.requestToEdit.startDate : '', Validators.compose([
+          Validators.pattern(this.dateMask),
+          Validators.required
+        ])),
+
+      endDate: new FormControl(this.requestToEdit && this.requestToEdit.endDate ?
+        this.requestToEdit.endDate : '', Validators.compose([
+          Validators.pattern(this.dateMask),
+          Validators.required
+        ])),
+
       comments: new FormControl(this.requestToEdit && this.requestToEdit.comments ? this.requestToEdit.comments : ''),
+
       notify: new FormControl(this.requestToEdit && this.requestToEdit.notify ?
         this.requestToEdit.notify : '', Validators.required),
     });
   }
 
+  onSubmit() {
+    if (this.editionForm.valid) {
+      this.getFormValues();
+    } else {
+      this.haveErrors = true;
+    }
+  }
+
   /**
    * To return the form values
    */
-  private getFormValues() {
+  getFormValues() {
     const durationSelected = this.editionForm.get('duration').value;
 
     const formsValue: TimeOffRequest = {
       id: this.requestToEdit ? this.requestToEdit.id : null,
-      startDate: '2018-Dec-22',
-      endDate: '2018-Dec-23',
+      startDate: this.editionForm.get('startDate').value,
+      endDate: this.editionForm.get('endDate').value,
       duration: this.editionForm.get('duration').value,
       status: 'Pending',
       leaveType: this.editionForm.get('leaveType').value,
@@ -66,22 +96,26 @@ export class TimeOffFormComponent implements OnInit {
       notify: this.editionForm.get('notify').value
     };
 
-    return formsValue;
+    if (formsValue.id) {
+      this.saveRequest(formsValue);
+    } else {
+      this.createRequest(formsValue);
+    }
   }
 
   /**
    * To emit the changed object to the parent component
    */
-  saveRequest() {
-    this.updateRequest.emit(this.getFormValues());
+  saveRequest(leaveRequest) {
+    this.updateRequest.emit(leaveRequest);
   }
 
   /**
    * To emit the form values to the parent
    * component create a new leave request
    */
-  createRequest() {
-    this.createLeaveRequest.emit(this.getFormValues());
+  createRequest(leaveRequest) {
+    this.createLeaveRequest.emit(leaveRequest);
   }
 
   /**
@@ -97,6 +131,14 @@ export class TimeOffFormComponent implements OnInit {
    */
   cancelFormVisualization() {
     this.cancelForm.emit(true);
+  }
+
+  /**
+   * To toggle the balance display
+   */
+  toggleLeaveBalance() {
+    this.isBalanceOpened = !this.isBalanceOpened;
+    this.isBalanceOpened ? this.balanceAction = 'Hide' : this.balanceAction = 'View';
   }
 
   /**
@@ -145,6 +187,18 @@ export class TimeOffFormComponent implements OnInit {
         name: 'Darryl Stewart'
       }
     ];
+  }
+
+  /**
+   * To get the hours balances and set to a variable
+   */
+  getBalances() {
+    this.balances = {
+      vacationTime: 10.00,
+      personal: 10.00,
+      sick: 0.00,
+      banked: 0.00,
+    };
   }
 
 }

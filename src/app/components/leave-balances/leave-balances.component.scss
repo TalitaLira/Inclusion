@@ -1,0 +1,46 @@
+@import '../../../assets//style-patterns/colors.scss';
+@import '../../../assets//style-patterns/fonts.scss';
+@import '../../../assets//style-patterns/form.scss';
+
+.balances{
+    position: relative;
+    width: 100%;
+    background-color: $blue-grey;
+    border-radius: 3px;
+    padding: 16px;
+    margin: 16px 0 0 0;
+    box-sizing: border-box;
+}
+
+form{
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    label, input{
+        width: 50%;
+    }
+    label{
+        margin: 0;
+    }
+}
+
+.balanceList{
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    li{
+        position: relative;
+        width: 100%;
+        display: inline-flex;
+        justify-content: space-between;
+        color: $font-dark-grey;
+        @include semi-bold;
+        font-size: 14px;
+        list-style: none;
+        .hours {
+            font-weight: initial;
+        }
+    }
+}

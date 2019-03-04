@@ -12,6 +12,7 @@ import { TimeOffFormComponent } from './components/time-off-form/time-off-form.c
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeaveBalancesComponent } from './components/leave-balances/leave-balances.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,13 +22,13 @@ import { LeaveBalancesComponent } from './components/leave-balances/leave-balanc
     HeaderComponent,
     RequestsListComponent,
     TimeOffFormComponent,
-    LeaveBalancesComponent
+    LeaveBalancesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

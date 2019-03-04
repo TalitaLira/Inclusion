@@ -1,27 +1,32 @@
 <div id="wrapEditionForm">
-    <form [formGroup]="editionForm">
+    <form [formGroup]="editionForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="leaveType">Leave type</label>
 
-            <select class="input-basic" name="leaveType" formControlName="leaveType">
-                <option [selected]="requestToEdit && type.name === requestToEdit.leaveType" *ngFor="let type of leaveTypes"
-                    value="{{ type.name }}">{{
+            <select class="input-basic" name="leaveType" formControlName="leaveType"
+                [class.invalid]="editionForm.get('leaveType').errors && haveErrors">
+                <option *ngFor="let type of leaveTypes"
+                    [selected]="requestToEdit && type.name === requestToEdit.leaveType" value="{{ type.name }}">{{
                     type.name }}</option>
             </select>
 
         </div>
+        <span class="balanceLink" (click)="toggleLeaveBalance()">{{ balanceAction }} Leave Balances</span>
         <div class="deslocated">
 
-
+            <app-leave-balances *ngIf="isBalanceOpened" [balances]="balances"></app-leave-balances>
 
             <div class="form-group wrap-duration">
                 <div class="duration-item">
-                    <input name="duration" formControlName="duration" type="radio" value="1" [checked]="requestToEdit && requestToEdit.duration >= 1">
+                    <input name="duration" formControlName="duration"
+                        [class.invalid]="editionForm.get('duration').errors && haveErrors" type="radio" value="1"
+                        [checked]="requestToEdit && requestToEdit.duration >= 1">
                     <label class="duration" for="duration">All Day</label>
                 </div>
 
                 <div class="duration-item">
-                    <input name="duration" formControlName="duration" type="radio" value="0.5" [checked]="requestToEdit && requestToEdit.duration < 1">
+                    <input name="duration" formControlName="duration" type="radio" value="0.5"
+                        [checked]="requestToEdit && requestToEdit.duration < 1">
                     <label class="duration" for="duration">Partial Day</label>
                 </div>
 
@@ -30,12 +35,15 @@
             <div class="dates">
                 <div class="form-group">
                     <label>Start Date</label>
-                    <input class="input-basic" formControlName="startDate" type="text">
-
+                    <input class="input-basic" placeholder="2019-Mar-4"
+                        [class.invalid]="editionForm.get('startDate').errors && haveErrors" formControlName="startDate"
+                        type="text">
                 </div>
                 <div class="form-group">
                     <label>End Date</label>
-                    <input class="input-basic" formControlName="endDate" type="text">
+                    <input class="input-basic" placeholder="2019-Mar-5"
+                        [class.invalid]="editionForm.get('endDate').errors && haveErrors" formControlName="endDate"
+                        type="text">
                 </div>
             </div>
 
@@ -47,23 +55,46 @@
             <div class="form-group">
                 <label>Notify</label>
 
-                <select class="input-basic" formControlName="notify">
-                    <option [selected]="requestToEdit && person.name === requestToEdit.notify" *ngFor="let person of people"
-                        value="{{ person.name }}">{{
+                <select class="input-basic" formControlName="notify"
+                    [class.invalid]="editionForm.get('notify').errors && haveErrors">
+                    <option [selected]="requestToEdit && person.name === requestToEdit.notify"
+                        *ngFor="let person of people" value="{{ person.name }}">{{
                         person.name }}</option>
                 </select>
 
             </div>
 
+            <div class="form-errors" *ngIf="haveErrors && !editionForm.valid">
+                <div class="invalid-feedback" *ngIf="editionForm.get('leaveType').errors">
+                    Leave type field is required
+                </div>
+                <div class="invalid-feedback" *ngIf="editionForm.get('duration').errors">
+                    To select a period is required
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="editionForm.get('startDate').touched && editionForm.get('startDate').errors || editionForm.get('startDate').errors">
+                    Start date field is required (format 2018-Mar-19)
+                </div>
+
+                <div class="invalid-feedback"
+                    *ngIf="editionForm.get('endDate').touched && editionForm.get('endDate').errors || editionForm.get('endDate').errors">
+                    End date is required (format 2018-Mar-19)
+                </div>
+                <div class="invalid-feedback" *ngIf="editionForm.get('notify').errors">
+                    Notify field is required
+                </div>
+            </div>
+
+
             <div *ngIf="isNewRequest" class="btns">
                 <button type="button" class="btn-border" (click)="cancelFormVisualization()">Cancel</button>
-                <button type="button" class="btn-filled" (click)="createRequest()">Submit Request</button>
+                <button type="submit" class="btn-filled">Submit Request</button>
             </div>
             <div *ngIf="!isNewRequest" class="btns">
                 <button type="button" (click)="deleteTimeOffRequest()" class="btn-border">Delete Request</button>
                 <div class="wrap-right">
                     <button type="button" (click)="cancelFormVisualization()" class="btn-border">Cancel</button>
-                    <button type="button" (click)="saveRequest()" class="btn-filled">Save</button>
+                    <button type="submit" class="btn-filled">Save</button>
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { TimeOffRequest } from 'src/app/interfaces/time-off-request';
-import { TimeOffFormResponse } from 'src/app/interfaces/time-off-form-response';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -26,7 +25,7 @@ export class MyScheduleComponent implements OnInit {
    * in the localstorage, otherwise, to set a new one
    */
   private CheckLocalStorage() {
-    const existinglist = this.storageService.getListFromLocalstorage('RequestsList');
+    const existinglist = this.storageService.getFromLocalstorage('RequestsList');
     if (existinglist) {
       this.timeOffList = existinglist;
     } else {
@@ -181,7 +180,7 @@ export class MyScheduleComponent implements OnInit {
         partialDay: false,
         allDay: true,
         comments: '',
-        notify: 'Darryl Stewart'
+        notify: 'Hailie Harrison'
       },
       {
         id: 4,
@@ -205,7 +204,7 @@ export class MyScheduleComponent implements OnInit {
         partialDay: false,
         allDay: true,
         comments: '',
-        notify: 'Darryl Stewart'
+        notify: 'Talita Lira'
       },
       {
         id: 6,

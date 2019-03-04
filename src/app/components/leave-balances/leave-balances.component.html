@@ -1,3 +1,12 @@
-<span>
-  leave-balances works!
-</span>
+<div class="balances">
+  <form [formGroup]="dateForm">
+    <label>Balances as of</label><input formControlName="calendar" type="text">
+  </form>
+
+  <ul class="balanceList">
+    <li><span>Vacation Time</span><span class="hours">{{ balances.vacationTime | number:'1.2-2' }} hrs</span></li>
+    <li><span>Personal Time</span><span class="hours">{{ balances.personal | number:'1.2-2' }} hrs</span></li>
+    <li><span>Sick</span><span class="hours">{{ balances.sick | number:'1.2-2' }} hrs</span></li>
+    <li><span>Banked</span><span class="hours">{{ balances.banked | number:'1.2-2' }} hrs</span></li>
+  </ul>
+</div>
