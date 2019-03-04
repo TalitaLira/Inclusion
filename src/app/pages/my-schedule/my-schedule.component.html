@@ -1,0 +1,12 @@
+<div class="content">
+  <p class="bread-crumb">
+    << Back to employee portal</p> <p class="page-title">{{ title }}
+  </p>
+
+  <app-requests-list [hidden]="requestToEdit || isRequestEnabled" [requests]="timeOffList" (enableNewRequest)="showRequestForm($event)"
+    (title)="setPageTitle($event)" (edition)="openEdition($event)"></app-requests-list>
+
+  <app-time-off-form *ngIf="requestToEdit || isRequestEnabled" [isNewRequest]="isRequestEnabled" (createLeaveRequest)="createNewRequest($event)"
+    (updateRequest)="updateLeaveRequest($event)" (deleteRequest)="deleteLeaveRequest($event)" (cancelForm)="hideForm()"
+    [requestToEdit]="requestToEdit"></app-time-off-form>
+</div>

@@ -1,0 +1,24 @@
+@import '../../../assets/style-patterns/form.scss';
+@import '../../../assets/style-patterns/btn.scss';
+
+#wrapEditionForm{
+    max-width: 340px;
+}
+
+.btns{
+    button{
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    .btn-filled{
+        margin-left: 4px;
+    }
+}
+
+@media (max-width: 350px){
+    .btns{
+        button{
+            font-size: 11px;
+        }
+    }
+}

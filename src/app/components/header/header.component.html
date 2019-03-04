@@ -1,0 +1,74 @@
+<div id="header">
+  <div class="top-half">
+    <div (click)="toggleMenu()" class="menu header-subitem">
+      <i class="zmdi zmdi-menu"></i>
+      <span>Menu</span>
+    </div>
+    <div class="logo header-subitem">
+      <img src="../../../assets//images/brand-inclusion.svg" alt="Inclusion">
+    </div>
+    <div class="header-subitem search">
+      <div class="wrap-search-bar">
+        <input placeholder="Find an Employee" type="text">
+        <button class="btn-grey">Find</button>
+      </div>
+    </div>
+    <div class="header-subitem infos">
+      <div class="person-info">
+        <div class="texts">
+          <p class="name">Talita Lira</p>
+          <p class="job-title">Frontend Developer</p>
+        </div>
+        <i class="zmdi zmdi-chevron-down"></i>
+
+      </div>
+      <hr />
+      <div class="optional-functionalities">
+
+        <div class="item">
+          <i class="zmdi zmdi-swap"></i>
+          <p>Switch</p>
+        </div>
+        <div class="item">
+          <i class="zmdi zmdi-fullscreen"></i>
+          <p>Full Screen</p>
+        </div>
+        <div class="item">
+          <i class="zmdi zmdi-info-outline"></i>
+          <p>Help</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div [class.open]="menu" class="bottom-half">
+    <div class="dark-screen close-menu" (click)="toggleMenu()"></div>
+    <div id="wrap-mobile-items">
+      <div class="menu-header">
+        <div class="logo header-subitem mob-item">
+          <img src="../../../assets//images/brand-inclusion.svg" alt="Inclusion">
+        </div>
+        <div class="header-subitem search mob-item">
+          <div class="wrap-search-bar">
+            <input placeholder="Find an Employee" type="text">
+            <button class="btn-grey">Find</button>
+          </div>
+        </div>
+      </div>
+      <ul class="navigation">
+        <li><a [class.active]="currentUrl === '/'" (click)="selectPage('/')">Home</a></li>
+        <li><a [routerLink]="">Schedules</a></li>
+        <li><a [routerLink]="">Daily Aproval</a></li>
+        <li><a [routerLink]="">Payroll</a></li>
+        <li><a [routerLink]="">Reports</a></li>
+        <li><a [routerLink]="">Roe</a></li>
+        <li><a [routerLink]="">Employees</a></li>
+        <li><a [routerLink]="">Time Entry</a></li>
+        <li><a [routerLink]="">Attendance</a></li>
+        <li><a [class.active]="currentUrl === '/myschedule'" (click)="selectPage('/myschedule')">My
+            Schedule</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>

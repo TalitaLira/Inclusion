@@ -1,0 +1,18 @@
+@import '../../../assets//style-patterns/colors.scss';
+@import '../../../assets//style-patterns/fonts.scss';
+
+
+.bread-crumb{
+    font-size: 12px;
+    color: $sky-blue;
+    margin-bottom: 0;
+    margin-top: 16px;
+}
+.page-title {
+    color: $grey;
+    @include semi-bold;
+    font-size: 18px;
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+

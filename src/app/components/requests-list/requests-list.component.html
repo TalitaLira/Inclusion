@@ -1,0 +1,79 @@
+<button (click)="createNewRequest()" class="btn-border time-off">New Time off request</button>
+
+<div class="list">
+  <ul id="filter-status">
+    <li [class.active]="currentClicked === 'pending'" (click)="setCurrentClicked('pending')">Pending ({{
+      pendingRequests.length }})</li>
+    <li [class.active]="currentClicked === 'completed'" (click)="setCurrentClicked('completed')">Completed ({{
+      completedRequests.length }})</li>
+  </ul>
+
+  <div [hidden]="isMobile === true">
+    <table id="pending" [class.unclicked]="currentClicked !== 'pending'">
+      <tr class="table-head">
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Duration</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+      <tr class="table-content" *ngFor="let req of pendingRequests">
+        <td>{{ req.startDate }}</td>
+        <td>{{ req.endDate }}</td>
+        <td>{{ req.duration }}</td>
+        <td><span class="status pending-status">{{ req.status }}</span></td>
+        <td class="edit" (click)="editRequest(req.id)">Edit</td>
+      </tr>
+    </table>
+
+    <table id="completed" [class.unclicked]="currentClicked !== 'completed'">
+      <tr class="table-head">
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Duration</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let req of completedRequests">
+        <td>{{ req.startDate }}</td>
+        <td>{{ req.endDate }}</td>
+        <td>{{ req.duration }}</td>
+        <td><span class="status completed-status">{{ req.status }}</span></td>
+        <td class="edit">Check</td>
+      </tr>
+    </table>
+  </div>
+
+  <div [hidden]="isMobile === false">
+    <div class="mob-list">
+      <ul [class.unclicked]="currentClicked !== 'pending'">
+        <li *ngFor="let req of pendingRequests">
+          <div class="req-info">
+            <p class="date" *ngIf="req.startDate !== req.endDate; else oneDate">{{ req.startDate }} - {{ req.endDate }}</p>
+            <ng-template #oneDate>
+              <p class="date">{{ req.startDate }}</p>
+            </ng-template>
+            <p class="duration">{{ formatDuration(req.duration) }}</p>
+            <p class="status pending-status" (click)="editRequest(req)">{{ req.status }}</p>
+          </div>
+          <p class="edit" (click)="editRequest(req.id)">Edit</p>
+        </li>
+      </ul>
+
+      <ul [class.unclicked]="currentClicked !== 'completed'">
+        <li *ngFor="let req of completedRequests">
+          <div class="req-info">
+            <p class="date" *ngIf="req.startDate !== req.endDate; else oneDate">{{ req.startDate }} - {{ req.endDate }}</p>
+            <ng-template #oneDate>
+              <p class="date">{{ req.startDate }}</p>
+            </ng-template>
+            <p class="duration">{{ formatDuration(req.duration) }}</p>
+            <p class="status completed-status" (click)="editRequest(req)">{{ req.status }}</p>
+          </div>
+          <p class="edit">Check</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

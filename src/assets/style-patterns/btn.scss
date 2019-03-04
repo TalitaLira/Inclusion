@@ -1,0 +1,23 @@
+@import '../../assets/style-patterns/colors.scss';
+@import '../../assets/style-patterns/fonts.scss';
+
+.btn-border {
+    border: 1px solid $sky-blue;
+    border-radius: 5px;
+    color: $sky-blue;
+    font-size: 18px;
+    padding: 13px 17px;
+    cursor: pointer;
+    background-color: $white;
+    @include semi-bold;
+}
+
+.btn-filled{
+    background-color: $medium-blue;
+    font-size: 14px;
+    color: $white;
+    cursor: pointer;
+    border-radius: 5px;
+    @include semi-bold;
+    padding: 13px 17px;
+}

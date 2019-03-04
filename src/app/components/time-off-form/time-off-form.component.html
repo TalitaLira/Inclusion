@@ -1,0 +1,72 @@
+<div id="wrapEditionForm">
+    <form [formGroup]="editionForm">
+        <div class="form-group">
+            <label for="leaveType">Leave type</label>
+
+            <select class="input-basic" name="leaveType" formControlName="leaveType">
+                <option [selected]="requestToEdit && type.name === requestToEdit.leaveType" *ngFor="let type of leaveTypes"
+                    value="{{ type.name }}">{{
+                    type.name }}</option>
+            </select>
+
+        </div>
+        <div class="deslocated">
+
+
+
+            <div class="form-group wrap-duration">
+                <div class="duration-item">
+                    <input name="duration" formControlName="duration" type="radio" value="1" [checked]="requestToEdit && requestToEdit.duration >= 1">
+                    <label class="duration" for="duration">All Day</label>
+                </div>
+
+                <div class="duration-item">
+                    <input name="duration" formControlName="duration" type="radio" value="0.5" [checked]="requestToEdit && requestToEdit.duration < 1">
+                    <label class="duration" for="duration">Partial Day</label>
+                </div>
+
+            </div>
+
+            <div class="dates">
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input class="input-basic" formControlName="startDate" type="text">
+
+                </div>
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input class="input-basic" formControlName="endDate" type="text">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Comments</label>
+                <textarea class="input-basic" formControlName="comments" cols="15" rows="10"></textarea>
+
+            </div>
+            <div class="form-group">
+                <label>Notify</label>
+
+                <select class="input-basic" formControlName="notify">
+                    <option [selected]="requestToEdit && person.name === requestToEdit.notify" *ngFor="let person of people"
+                        value="{{ person.name }}">{{
+                        person.name }}</option>
+                </select>
+
+            </div>
+
+            <div *ngIf="isNewRequest" class="btns">
+                <button type="button" class="btn-border" (click)="cancelFormVisualization()">Cancel</button>
+                <button type="button" class="btn-filled" (click)="createRequest()">Submit Request</button>
+            </div>
+            <div *ngIf="!isNewRequest" class="btns">
+                <button type="button" (click)="deleteTimeOffRequest()" class="btn-border">Delete Request</button>
+                <div class="wrap-right">
+                    <button type="button" (click)="cancelFormVisualization()" class="btn-border">Cancel</button>
+                    <button type="button" (click)="saveRequest()" class="btn-filled">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
